@@ -1,5 +1,6 @@
 # @snapp-notes/markdown-parser
 
+[![NPM Version](https://img.shields.io/npm/v/%40snapp-notes%2Fmarkdown-parser)](https://www.npmjs.com/package/@snapp-notes/markdown-parser)
 [![Test](https://github.com/SNApp-notes/markdown-parser/actions/workflows/test.yml/badge.svg)](https://github.com/SNApp-notes/markdown-parser/actions/workflows/test.yml)
 [![Coverage Status](https://coveralls.io/repos/github/SNApp-notes/markdown-parser/badge.svg?branch=master)](https://coveralls.io/github/SNApp-notes/markdown-parser?branch=master)
 [![LICENSE MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/NApp-notes/markdown-parser/blob/master/LICENSE)

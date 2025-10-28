@@ -1,6 +1,6 @@
 {
   "name": "@snapp-notes/markdown-parser",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "Simple Markdown Parser that return AST",
   "main": "index.js",
   "types": "index.d.ts",

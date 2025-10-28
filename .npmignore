@@ -1,0 +1,7 @@
+.gitattributes
+.github
+src
+vitest.config.js
+test
+coverage
+*~
