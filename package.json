@@ -3,16 +3,27 @@
   "version": "0.0.1",
   "description": "Simple Markdown Parser that return AST",
   "main": "index.js",
-  "scripts": {
-    "build": "peggy --format es src/grammar.peggy -o index.js"
-  },
   "types": "index.d.ts",
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
   "type": "module",
+  "scripts": {
+    "build": "peggy --format es src/grammar.peggy -o index.js",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
   "devDependencies": {
     "peggy": "^5.0.6",
     "vitest": "^4.0.4"
+  }
+  "keywords": ["parser", "markdown"],
+  "author": {
+    "name": "Jakub T. Jankiewicz",
+    "email": "jcubic@onet.pl",
+    "url": "https://jcubic.pl/me"
+  },
+  "copyright": "Copyright (C) 2025 Jakub T. Jankiewicz <jcubic@onet.pl>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SNApp-notes/markdown-parser.git"
   }
 }
