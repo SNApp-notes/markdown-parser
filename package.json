@@ -29,6 +29,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SNApp-notes/markdown-parser.git"
+    "url": "git+https://github.com/SNApp-notes/markdown-parser.git"
   }
 }
