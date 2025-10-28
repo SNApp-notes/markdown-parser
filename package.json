@@ -1,0 +1,11 @@
+{
+  "name": "@snapp-notes/markdown-parser",
+  "version": "0.0.1",
+  "description": "Simple Markdown Parser that return AST",
+  "main": "index.js",
+  "scripts": { },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "module",
+}
