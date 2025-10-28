@@ -12,10 +12,14 @@
     "test:coverage": "vitest run --coverage"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "^4.0.4",
     "peggy": "^5.0.6",
     "vitest": "^4.0.4"
   },
-  "keywords": ["parser", "markdown"],
+  "keywords": [
+    "parser",
+    "markdown"
+  ],
   "author": {
     "name": "Jakub T. Jankiewicz",
     "email": "jcubic@onet.pl",
