@@ -9,6 +9,7 @@ on:
       - 'vitest.config.js'
       - 'package.json'
       - 'package-lock.json'
+      - '.github/workflows/**'
   pull_request:
     branches: [ master ]
     paths:
@@ -17,6 +18,7 @@ on:
       - 'vitest.config.js'
       - 'package.json'
       - 'package-lock.json'
+      - '.github/workflows/**'
 
 jobs:
   test:
