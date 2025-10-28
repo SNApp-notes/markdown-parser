@@ -8,12 +8,13 @@
   "scripts": {
     "build": "peggy --format es src/grammar.peggy -o index.js",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "peggy": "^5.0.6",
     "vitest": "^4.0.4"
-  }
+  },
   "keywords": ["parser", "markdown"],
   "author": {
     "name": "Jakub T. Jankiewicz",

@@ -1,1 +1,5 @@
 node_modules
+# Coverage files
+coverage/
+.nyc_output/
+*.lcov
