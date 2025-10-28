@@ -337,4 +337,6 @@ npm test
 
 ## License
 
-MIT
+Licensed under [MIT](http://opensource.org/licenses/MIT) license
+
+Copyright (c) 2025 [Jakub T. Jankiewicz](https://jcubic.pl/me)
