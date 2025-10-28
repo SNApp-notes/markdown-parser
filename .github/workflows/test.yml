@@ -2,9 +2,21 @@ name: Test
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ master ]
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - 'vitest.config.js'
+      - 'package.json'
+      - 'package-lock.json'
   pull_request:
-    branches: [ main, master ]
+    branches: [ master ]
+    paths:
+      - 'src/**'
+      - 'test/**'
+      - 'vitest.config.js'
+      - 'package.json'
+      - 'package-lock.json'
 
 jobs:
   test:
