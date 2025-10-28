@@ -1,19 +1,7 @@
-import { describe, it, expect, beforeAll } from 'vitest';
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-import peggy from 'peggy';
+import { describe, it, expect } from 'vitest';
+import { parse } from '../index.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-let parser;
-
-beforeAll(() => {
-  const grammarPath = join(__dirname, '../src/grammar.peggy');
-  const grammar = readFileSync(grammarPath, 'utf-8');
-  parser = peggy.generate(grammar);
-});
+const parser = { parse };
 
 describe('Markdown Parser', () => {
   describe('Headers', () => {
