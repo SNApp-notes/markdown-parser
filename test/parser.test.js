@@ -298,19 +298,11 @@ describe('Markdown Parser', () => {
 
     it('should parse text with newlines', () => {
       const result = parser.parse('Line 1\nLine 2');
-      expect(result).toContainEqual({
+      // Adjacent text nodes are now merged into one
+      expect(result).toEqual([{
         type: 'text',
-        content: 'Line 1'
-      });
-      expect(result).toContainEqual({
-        type: 'text',
-        content: '\n',
-        loc: expect.any(Object)
-      });
-      expect(result).toContainEqual({
-        type: 'text',
-        content: 'Line 2'
-      });
+        content: 'Line 1\nLine 2'
+      }]);
     });
   });
 
@@ -319,9 +311,9 @@ describe('Markdown Parser', () => {
       const result = parser.parse('# Title\nSome text');
       expect(result[0].type).toBe('header');
       expect(result[1].type).toBe('text');
-      expect(result[1].content).toBe('\n');
-      expect(result[2].type).toBe('text');
-      expect(result[2].content).toBe('Some text');
+      // Adjacent text nodes (newline + text) are now merged into one
+      expect(result[1].content).toBe('Some text');
+      expect(result).toHaveLength(2);
     });
 
     it('should parse complex markdown with multiple elements', () => {
@@ -334,7 +326,7 @@ const x = 1;
 * Item 1`;
 
       const result = parser.parse(markdown);
-      
+
       expect(result[0].type).toBe('header');
       expect(result.some(item => item.type === 'bold')).toBe(true);
       expect(result.some(item => item.type === 'italic')).toBe(true);
@@ -367,7 +359,7 @@ const x = 1;
 ## H2
 ### H3`;
       const result = parser.parse(markdown);
-      
+
       const headers = result.filter(item => item.type === 'header');
       expect(headers).toHaveLength(3);
       expect(headers[0].level).toBe(1);
@@ -380,14 +372,17 @@ const x = 1;
 
 Text 2`;
       const result = parser.parse(markdown);
-      const newlines = result.filter(item => item.content === '\n');
-      expect(newlines.length).toBeGreaterThanOrEqual(2);
+      // Adjacent text nodes (including newlines) are now merged into one
+      expect(result).toEqual([{
+        type: 'text',
+        content: 'Text 1\n\nText 2'
+      }]);
     });
   });
 
   describe('Edge Cases', () => {
     it('should handle empty string input', () => {
-      expect(() => parser.parse('')).toThrow();
+      expect(parser.parse('')).toEqual([]);
     });
 
     it('should parse unclosed bold gracefully', () => {
@@ -412,6 +407,60 @@ Text 2`;
       // Unclosed code blocks don't throw, they're treated as text
       const result = parser.parse('```javascript\ncode');
       expect(result[0].type).toBe('text');
+    });
+
+    it('should not treat underscores around headers as italic markers', () => {
+      // Bug: underscores before and after headers shouldn't be treated as italic markers
+      const markdown = `this is _ italic
+
+## header
+
+this _ italic`;
+
+      const result = parser.parse(markdown);
+
+      // Should find the header
+      const headers = result.filter(item => item.type === 'header');
+      expect(headers).toHaveLength(1);
+      expect(headers[0].level).toBe(2);
+      expect(headers[0].content).toBe('## header');
+
+      // Should treat underscores as plain text, not italic markers
+      const italics = result.filter(item => item.type === 'italic');
+      expect(italics).toHaveLength(0);
+
+      // Should have text containing the underscores
+      const textWithUnderscore = result.filter(item =>
+        item.type === 'text' && item.content.includes('_')
+      );
+      expect(textWithUnderscore.length).toBeGreaterThan(0);
+    });
+
+    it('should not treat double underscores around headers as bold markers', () => {
+      // Bug: double underscores before and after headers shouldn't be treated as bold markers
+      const markdown = `this is __ bold
+
+## header
+
+this __ bold`;
+
+      const result = parser.parse(markdown);
+
+      // Should find the header
+      const headers = result.filter(item => item.type === 'header');
+      expect(headers).toHaveLength(1);
+      expect(headers[0].level).toBe(2);
+      expect(headers[0].content).toBe('## header');
+
+      // Should treat double underscores as plain text, not bold markers
+      const bolds = result.filter(item => item.type === 'bold');
+      expect(bolds).toHaveLength(0);
+
+      // Should have text containing the underscores
+      const textWithUnderscore = result.filter(item =>
+        item.type === 'text' && item.content.includes('__')
+      );
+      expect(textWithUnderscore.length).toBeGreaterThan(0);
     });
   });
 

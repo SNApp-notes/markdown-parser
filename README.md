@@ -255,25 +255,6 @@ interface Position {
 }
 ```
 
-## Error Handling
-
-The parser throws a `SyntaxError` when it encounters invalid markdown:
-
-```javascript
-import { parse, SyntaxError } from '@snapp-notes/markdown-parser';
-
-try {
-  const ast = parse('');  // Empty input
-} catch (error) {
-  if (error instanceof SyntaxError) {
-    console.error('Parse error:', error.message);
-    console.error('Expected:', error.expected);
-    console.error('Found:', error.found);
-    console.error('Location:', error.location);
-  }
-}
-```
-
 ## Supported Markdown Syntax
 
 | Element | Syntax | Example |
@@ -342,6 +323,7 @@ npm test
 
 ## License
 
-Licensed under [MIT](http://opensource.org/licenses/MIT) license
+Copyright (c) 2025 [Jakub T. Jankiewicz](https://jakub.jankiewicz.org)
 
-Copyright (c) 2025 [Jakub T. Jankiewicz](https://jcubic.pl/me)
+Released under [MIT](http://opensource.org/licenses/MIT) license
+

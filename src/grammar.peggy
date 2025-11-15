@@ -1,5 +1,19 @@
-start = arr:(header / code / content / newline)+ {
-   return arr.flat();
+/*
+ * Peggy Grammar with Simple Markdown Parser
+ * Copyright (c) Jakub T. Jankiewicz
+ */
+start = arr:(header / code / content / newline)* {
+   return arr.flat().reduce((acc, item) => {
+      if (acc.length) {
+         const last = acc.at(-1);
+         if (last.type === 'text' && item.type === 'text') {
+            last.content += item.content;
+            return acc;
+         }
+      }
+      acc.push(item);
+      return acc;
+   }, []);
 }
 
 newline = "\n" {
@@ -10,7 +24,7 @@ code = "```" name:$[^\n]* code:$(!"\n```" .)* "\n```" {
     return { type: 'code', content: code, language: name, loc: location() };
 }
 
-header = level:$'#'+ __ text:$[^\n]+ {
+header = level:$'#'+ __ text:$[^\n]+ '\n'? {
     const content = `${level} ${text}`;
     return { type: 'header', content, level: level.length, loc: location() };
 }
@@ -54,7 +68,7 @@ bold = bold_a / bold_b
 bold_a = '__' text:(text_bold_a / italic) '__' {
     return { type: 'bold', content: `__${text}__`, loc: location() };
 }
-text_bold_a = text:$[^_]+ {
+text_bold_a = text:$[^_#*]+ {
     return text;
 }
 
@@ -62,17 +76,17 @@ bold_b = '**' text:(text_bold_b / italic) '**' {
     return { type: 'bold', content: `**${text}**`, loc: location() };
 }
 
-text_bold_b = text:$[^*]+ {
+text_bold_b = text:$[^*#_]+ {
     return text;
 }
 
 italic = italic_a / italic_b
 
-italic_a = '*' !' ' text:$[^*]+ !' ' '*' {
+italic_a = '*' !' ' text:$[^_*#]+ !' ' '*' {
     return { type: 'italic', content: `*${text}*`, loc: location() };
 }
 
-italic_b = '_' text:$[^_]+ '_' {
+italic_b = '_' text:$[^_*#]+ '_' {
     return { type: 'italic', content: `_${text}_`, loc: location() };
 }
 
